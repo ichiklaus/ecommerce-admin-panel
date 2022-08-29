@@ -1,0 +1,59 @@
+.Form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Form>form {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  width: 50%;
+}
+
+.field-block.full {
+  width: 100%;
+}
+
+.col-2 {
+  display: flex;
+  flex-direction: row;
+}
+
+.col-3 {
+  display: flex;
+  flex-direction: row;
+  column-gap: 5.25rem;
+  width: 600px;
+}
+
+.col-3 .field-block {
+  flex-basis: 120px;
+  min-width: 120px;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.field-block input[type="text"],
+.field-block input[type="area"] {
+  padding: 0.5rem 0.75rem;
+}
+
+.cta-wrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cta-wrapper>button[type="submit"] {
+  padding: 0.75rem 3rem;
+  cursor: pointer;
+}
