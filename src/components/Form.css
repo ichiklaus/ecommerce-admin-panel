@@ -1,12 +1,16 @@
-.Form {
+#Form {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* max-width: 600px; */
+  width: 45vw;
+  padding: 0 0 3rem 0rem;
 }
 
-.Form>form {
-  width: 100%;
-  max-width: 600px;
+#Form>form {
+  /* width: 100%; */
+  flex: 100% 1 1;
+  /* min-width: 200px; */
   display: flex;
   flex-direction: column;
   row-gap: 1.25rem;
@@ -18,22 +22,45 @@
   justify-content: flex-start;
   text-align: left;
   width: 50%;
+  margin-bottom: 1rem;
 }
 
 .field-block.full {
   width: 100%;
 }
 
+.field-block label {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.field-block>.error-message {
+  padding-top: 0.1rem;
+  padding-left: 0.30rem;
+  color: #c06464;
+}
+
 .col-2 {
   display: flex;
   flex-direction: row;
+  column-gap: 2.25rem;
+  max-width: 100%;
+  /* max-width: 600px; */
+}
+
+.col-2 .field-block {
+  flex-basis: 120px;
+  min-width: 120px;
+  flex-grow: 1;
+  flex-shrink: 1;
 }
 
 .col-3 {
   display: flex;
   flex-direction: row;
   column-gap: 5.25rem;
-  width: 600px;
+  max-width: 100%;
+  /* max-width: 600px; */
 }
 
 .col-3 .field-block {
@@ -44,8 +71,9 @@
 }
 
 .field-block input[type="text"],
-.field-block input[type="area"] {
-  padding: 0.5rem 0.75rem;
+.field-block input[type="textarea"] {
+  padding: 0.75rem 0.75rem;
+  font-size: 14px;
 }
 
 .cta-wrapper {
@@ -56,4 +84,5 @@
 .cta-wrapper>button[type="submit"] {
   padding: 0.75rem 3rem;
   cursor: pointer;
+  font-size: 1rem;
 }
