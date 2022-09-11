@@ -62,18 +62,22 @@ const ImageUploader = ({ setUrlsObject }) => {
   return (
     <div id="ImageUploader">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="file"
-          name="picture"
-          {...register('picture', {
-            onChange: (e) => {
-              setImageArray((prev) => [...prev, e.target.files[0]]);
-            },
-          })}
-        />
-        <button type="submit">Upload files</button>
+        <div className='input-file-wrapper'>
+          <label htmlFor="picture">Upload your images: </label>
+          <input
+            type="file"
+            name="picture"
+            id="picture"
+            {...register('picture', {
+              onChange: (e) => {
+                setImageArray((prev) => [...prev, e.target.files[0]]);
+              },
+            })}
+          />
+        </div>
+        <button type="submit">Upload all</button>
       </form>
-      <ImageGallery imageArray={imageArray} />
+        <ImageGallery imageArray={imageArray} />
     </div>
   );
 };

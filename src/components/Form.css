@@ -1,7 +1,7 @@
 #Form {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   /* max-width: 600px; */
   width: 45vw;
   padding: 0 0 3rem 0rem;
@@ -71,9 +71,30 @@
 }
 
 .field-block input[type="text"],
-.field-block input[type="textarea"] {
-  padding: 0.75rem 0.75rem;
+.field-block input[type="textarea"],
+.field-block select
+ {
+  padding: 0.6rem 0.75rem;
   font-size: 14px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.field-block input:focus-visible {
+  /* outline: #c06464; */
+  outline-style: inset;
+    outline-width: 1px;
+    outline-color: var(--grayish-blue);
+    border: none;
+}
+
+.field-block select {
+  
 }
 
 .cta-wrapper {

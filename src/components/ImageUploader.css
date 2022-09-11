@@ -9,3 +9,17 @@
   row-gap: 1rem;
   padding: 0 0 3rem 0rem;
 }
+
+#ImageUploader form {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.input-file-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  row-gap: 0.75rem;
+}

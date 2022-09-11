@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-// import axios from 'axios';
+import axios from 'axios';
 
 import './Form.css';
 
@@ -10,6 +10,8 @@ const Form = ({ urlsObject, setUrlsObject }) => {
   const {
     register,
     handleSubmit,
+    reset,
+    formState,
     formState: { errors },
   } = useForm();
 
@@ -23,35 +25,53 @@ const Form = ({ urlsObject, setUrlsObject }) => {
 
     // TODO: Image upload code
 
-    try {
-      const response = await fetch(API_URL, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      // If response was ok, clear the Urls Object
-      if (response.ok) setUrlsObject(() => ({}));
-    } catch (error) {
-      console.log(error.response);
-    }
-
-    // TODO: FIX AXIOS POST REQUEST
     // try {
-    //   const response = await axios.post(
-    //     'http://127.0.0.1:5000/api/ecommerce-articles/',
-    //     JSON.stringify(data),
-    //     {
-    //       headers: { Accept: 'application/json', 'Content-Type': 'text/json' },
+    //   const response = await fetch(API_URL, {
+    //     method: 'POST',
+    //     headers: {
+    //       Accept: 'application/json',
+    //       'Content-Type': 'application/json',
     //     },
-    //   );
-    //   console.log(response.data);
+    //     body: JSON.stringify(data),
+    //   });
+    //   // If response was ok, clear the Urls Object
+    //   if (response.ok) {
+    //     setUrlsObject(() => ({}));
+    //     data = {};
+    //   }
     // } catch (error) {
     //   console.log(error.response);
     // }
+
+    // TODO: FIX AXIOS POST REQUEST
+    try {
+      const response = await axios({
+        method: 'POST',
+        url: API_URL,
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        data: JSON.stringify(data),
+      });
+      console.log(response.data);
+      if (response.ok) {
+        setUrlsObject(() => ({}));
+        data = {};
+      }
+    } catch (error) {
+      console.log(error.response);
+      console.log(error.message);
+    }
   };
+
+  useEffect(() => {
+    if (formState.isSubmitSuccessful) {
+      reset();
+    }
+  }, [formState, reset]);
+
   const handleError = (errors) => {};
 
   const registerValidation = {
@@ -65,7 +85,7 @@ const Form = ({ urlsObject, setUrlsObject }) => {
       },
     },
     'article-description': { required: 'A description is required.' },
-    'article-composition': { required: "Article's composition is required." },
+    'article-section-gender': { required: 'Field is required.' },
     'article-retail-price': {
       required: 'This field is required.',
       pattern: {
@@ -156,14 +176,26 @@ const Form = ({ urlsObject, setUrlsObject }) => {
               name="article-composition"
               type="text"
               placeholder="e.g. Shell: Cotton 98%, Spandex 2%; Pocket lining: Cotton 100% (separate by semicolon)."
-              {...register(
-                'article-composition',
-                registerValidation['article-composition'],
-              )}
+              {...register('article-composition')}
             />
+          </div>
+          <div id="article-section-field" className="field-block">
+            <label htmlFor="article-gender-section">Section</label>
+            <select
+              name="article-gender-section"
+              id="article-gender-section"
+              {...register(
+                'article-gender-section',
+                registerValidation['article-gender-section'],
+              )}
+            >
+              <option value="Other">Other</option>
+              <option value="Women">Female</option>
+              <option value="Men">Male</option>
+            </select>
             <small className="error-message">
-              {errors?.['article-composition'] &&
-                errors['article-composition'].message}
+              {errors?.['article-gender-section'] &&
+                errors['article-gender-section'].message}
             </small>
           </div>
           <div id="article-size-field" className="field-block full">
