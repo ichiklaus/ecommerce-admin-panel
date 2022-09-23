@@ -8,9 +8,9 @@ import {
 } from '../firebase';
 import ImageGallery from './ImageGallery';
 
-import './ImageUploader.css';
+import styles from './ImageUploader.module.css';
 
-const ImageUploader = ({ setUrlsObject }) => {
+export default function ImageUploader({ setUrlsObject }) {
   const [imageArray, setImageArray] = useState([]);
   const { register, handleSubmit } = useForm();
 
@@ -60,9 +60,9 @@ const ImageUploader = ({ setUrlsObject }) => {
   };
 
   return (
-    <div id="ImageUploader">
+    <div id="ImageUploader" className={styles['image-uploader']}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className='input-file-wrapper'>
+        <div className={styles[`input-file-wrapper`]}>
           <label htmlFor="picture">Upload your images: </label>
           <input
             type="file"
@@ -77,9 +77,7 @@ const ImageUploader = ({ setUrlsObject }) => {
         </div>
         <button type="submit">Upload all</button>
       </form>
-        <ImageGallery imageArray={imageArray} />
+      <ImageGallery imageArray={imageArray} />
     </div>
   );
-};
-
-export default ImageUploader;
+}
