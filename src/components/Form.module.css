@@ -1,0 +1,235 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  max-width: 45vw;
+  width: 100%;
+  padding: 0 0 3rem 0rem;
+}
+
+.container>form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.25rem;
+}
+
+.col-2 {
+  column-gap: 2.25rem;
+  max-width: 100%;
+}
+
+.col-3 {
+  column-gap: 5.25rem;
+  max-width: 100%;
+}
+
+.col-2,
+.col-3 {
+  display: flex;
+  flex-direction: row;
+}
+
+.col-2 .field-block,
+.col-3 .field-block {
+  flex-basis: 120px;
+  min-width: 120px;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.field-block {
+  width: 50%;
+}
+
+.field-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  text-align: left;
+  margin-bottom: 1rem;
+}
+
+.field-block.full {
+  width: 100%;
+}
+
+.field-block label {
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.field-block>.error-message {
+  padding-top: 0.1rem;
+  padding-left: 0.3rem;
+  color: var(--error-message);
+}
+
+.field-block input[type='text'],
+.field-block input[type='textarea'],
+.field-block select {
+  padding: 0.65rem 0.75rem;
+  margin-top: 0.5rem;
+  font-size: 14px;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  outline-style: none;
+  border: 1px solid var(--grayish-blue);
+}
+
+.field-block input:focus-visible,
+.field-block select:focus-visible {
+  border: 1px solid var(--dark-grayish-blue);
+  outline-style: none;
+}
+
+.cta-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.cta-wrapper>button[type='submit'] {
+  padding: 0.75rem 3rem;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.register-button-wrapper {
+  width: 100%;
+  background-color: var(--orange);
+  color: var(--white);
+  border: 1px solid var(--orange);
+}
+
+.upload-popup-button-wrapper {
+  background-color: var(--white);
+  color: var(--orange);
+  border: 1px solid var(--orange);
+}
+
+.upload-popup-button-wrapper>i {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.register-button-wrapper,
+.upload-popup-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  height: 48px;
+  outline: none;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -o-border-radius: 7px;
+}
+
+.register-button-wrapper,
+.upload-popup-button-wrapper {
+  transition: all 200ms ease-in-out;
+  -webkit-transition: all 200ms ease-in-out;
+  -moz-transition: all 200ms ease-in-out;
+  -ms-transition: all 200ms ease-in-out;
+  -o-transition: all 200ms ease-in-out;
+}
+
+.register-button-wrapper,
+.upload-popup-button-wrapper>i {
+  font-weight: 700;
+  letter-spacing: 0.05rem;
+  cursor: pointer;
+  font-style: normal;
+}
+
+.upload-popup-button-wrapper:hover {
+  background-color: var(--orange-transparent);
+  border: 1px solid var(--orange-transparent);
+}
+
+.register-button-wrapper:hover {
+  background-color: var(--orange-semi-transparent);
+  border: 1px solid var(--orange-semi-transparent);
+}
+
+/*------------------------------------------
+  Responsive Grid Media Queries - 1280, 1024, 768, 480
+   1280-1024   - desktop (default grid)
+   1024-768    - tablet landscape
+   768-480     - tablet 
+   480-less    - phone landscape & smaller
+--------------------------------------------*/
+@media all and (min-width: 1280px) {}
+
+@media all and (min-width: 1024px) and (max-width: 1280px) {}
+
+@media all and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+    width: 80%;
+    max-width: 100%;
+  }
+
+  .container>form {
+    width: 100%;
+  }
+}
+
+@media all and (min-width: 480px) and (max-width: 768px) {
+  .container {
+    width: 80%;
+    max-width: 100%;
+  }
+
+  .container>form {
+    width: 100%;
+  }
+
+  .field-block {
+    width: 100%;
+  }
+
+  .col-2,
+  .col-3 {
+    flex-direction: column;
+  }
+
+  .col-2 .field-block,
+  .col-3 .field-block {
+    flex: 0 0 0;
+  }
+}
+
+@media all and (max-width: 480px) {
+  .container {
+    width: 90%;
+    max-width: 100%;
+  }
+
+  .container>form {
+    width: 100%;
+  }
+
+  .field-block {
+    width: 100%;
+  }
+
+  .col-2,
+  .col-3 {
+    flex-direction: column;
+  }
+
+  .col-2 .field-block,
+  .col-3 .field-block {
+    flex: 0 0 0;
+  }
+}
