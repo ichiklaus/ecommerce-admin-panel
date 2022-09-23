@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import FileUploader from './FileUploader';
 
-import './Form.css';
+import styles from './Form.module.css';
+import { useState } from 'react';
 
 const API_URL = `http://127.0.0.1:5000/api/ecommerce-articles/`;
 
-const Form = ({ urlsObject, setUrlsObject }) => {
+export default function Form({ urlsObject, setUrlsObject }) {
   const {
     register,
     handleSubmit,
@@ -24,26 +26,6 @@ const Form = ({ urlsObject, setUrlsObject }) => {
     console.log(JSON.stringify(data));
 
     // TODO: Image upload code
-
-    // try {
-    //   const response = await fetch(API_URL, {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify(data),
-    //   });
-    //   // If response was ok, clear the Urls Object
-    //   if (response.ok) {
-    //     setUrlsObject(() => ({}));
-    //     data = {};
-    //   }
-    // } catch (error) {
-    //   console.log(error.response);
-    // }
-
-    // TODO: FIX AXIOS POST REQUEST
     try {
       const response = await axios({
         method: 'POST',
@@ -101,13 +83,20 @@ const Form = ({ urlsObject, setUrlsObject }) => {
     },
   };
 
+  const [popup, isPopup] = useState(false);
+
+  function openPopup() {
+    console.log(popup);
+    isPopup(() => !popup);
+  }
+
   // TODO: ADD article COMPOSITION FIELD
   return (
-    <div id="Form">
+    <div id="Form" className={styles[`container`]}>
       <form onSubmit={handleSubmit(onSubmit, handleError)}>
         <div id="article-main-info">
-          <div className="col-2">
-            <div id="article-brand-field" className="field-block">
+          <div className={styles[`col-2`]}>
+            <div id="article-brand-field" className={styles[`field-block`]}>
               <label htmlFor="article-brand">Brand</label>
               <input
                 name="article-brand"
@@ -118,11 +107,11 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                   registerValidation['article-brand'],
                 )}
               />
-              <small className="error-message">
+              <small className={styles[`error-message`]}>
                 {errors?.['article-brand'] && errors['article-brand'].message}
               </small>
             </div>
-            <div id="article-name-field" className="field-block">
+            <div id="article-name-field" className={styles[`field-block`]}>
               <label htmlFor="article-name">Name</label>
               <input
                 name="article-name"
@@ -133,12 +122,15 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                   registerValidation['article-name'],
                 )}
               />
-              <small className="error-message">
+              <small className={styles[`error-message`]}>
                 {errors?.['article-name'] && errors['article-name'].message}
               </small>
             </div>
           </div>
-          <div id="article-number-field" className="field-block full">
+          <div
+            id="article-number-field"
+            className={`${styles['field-block']} ${styles['full']}`}
+          >
             <label htmlFor="article-number">Article No.</label>
             <input
               name="article-number"
@@ -149,11 +141,14 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                 registerValidation['article-number'],
               )}
             />
-            <small className="error-message">
+            <small className={styles[`error-message`]}>
               {errors?.['article-number'] && errors['article-number'].message}
             </small>
           </div>
-          <div id="article-description-field" className="field-block full">
+          <div
+            id="article-description-field"
+            className={`${styles['field-block']} ${styles['full']}`}
+          >
             <label htmlFor="article-description">Description</label>
             <input
               name="article-description"
@@ -165,12 +160,15 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                 registerValidation['article-description'],
               )}
             />
-            <small className="error-message">
+            <small className={styles[`error-message`]}>
               {errors?.['article-description'] &&
                 errors['article-description'].message}
             </small>
           </div>
-          <div id="article-composition-field" className="field-block full">
+          <div
+            id="article-composition-field"
+            className={`${styles['field-block']} ${styles['full']}`}
+          >
             <label htmlFor="article-composition">Composition</label>
             <input
               name="article-composition"
@@ -179,7 +177,7 @@ const Form = ({ urlsObject, setUrlsObject }) => {
               {...register('article-composition')}
             />
           </div>
-          <div id="article-section-field" className="field-block">
+          <div id="article-section-field" className={styles[`field-block`]}>
             <label htmlFor="article-gender-section">Section</label>
             <select
               name="article-gender-section"
@@ -193,24 +191,30 @@ const Form = ({ urlsObject, setUrlsObject }) => {
               <option value="Women">Female</option>
               <option value="Men">Male</option>
             </select>
-            <small className="error-message">
+            <small className={styles[`error-message`]}>
               {errors?.['article-gender-section'] &&
                 errors['article-gender-section'].message}
             </small>
           </div>
-          <div id="article-size-field" className="field-block full">
+          <div
+            id="article-size-field"
+            className={`${styles['field-block']} ${styles['full']}`}
+          >
             <label htmlFor="article-size">Article's size</label>
             <input
               name="article-size"
               type="text"
-              placeholder="e.g. Sole: 35 EUR"
+              placeholder="e.g. 4; 6; 8 (separate by semicolon)"
               {...register('article-size')}
             />
           </div>
         </div>
         <div id="article-price-info">
-          <div className="col-3">
-            <div id="article-retail-price-field" className="field-block">
+          <div className={styles[`col-2`]}>
+            <div
+              id="article-retail-price-field"
+              className={styles[`field-block`]}
+            >
               <input
                 name="article-retail-price"
                 type="text"
@@ -220,12 +224,12 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                   registerValidation['article-retail-price'],
                 )}
               />
-              <small className="error-message">
+              <small className={styles[`error-message`]}>
                 {errors?.['article-retail-price'] &&
                   errors['article-retail-price'].message}
               </small>
             </div>
-            <div id="article-discount-field" className="field-block">
+            <div id="article-discount-field" className={styles[`field-block`]}>
               <input
                 name="article-discount"
                 type="text"
@@ -235,20 +239,29 @@ const Form = ({ urlsObject, setUrlsObject }) => {
                   registerValidation['article-discount'],
                 )}
               />
-              <small className="error-message">
+              <small className={styles[`error-message`]}>
                 {errors?.['article-discount'] &&
                   errors['article-discount'].message}
               </small>
             </div>
           </div>
         </div>
-        <div id="form-cta" className="cta-wrapper">
+
+        <FileUploader popup={popup} isPopup={isPopup} />
+        <div
+          id="upload-popup-button"
+          className={styles['upload-popup-button-wrapper']}
+        >
+          <i onClick={openPopup}>Upload files</i>
+        </div>
+
+        <div id="form-cta" className={styles[`cta-wrapper`]}>
           {/* <input type="submit" /> */}
-          <button type="submit">Register</button>
+          <button className={styles['register-button-wrapper']} type="submit">
+            Register
+          </button>
         </div>
       </form>
     </div>
   );
-};
-
-export default Form;
+}
