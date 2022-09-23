@@ -1,0 +1,20 @@
+:root {
+  --orange: #ff7d1a;
+  --pale-orange: #ffede0;
+  --orange-semi-transparent: #ff7d1acc;
+  --orange-transparent: #ff7d1a33;
+
+  /* ### Neutral */
+  --very-vark-blue: #1d2025;
+  --dark-grayish-blue: #68707d;
+  --grayish-blue: #b6bcc8;
+  --light-grayish-blue: #e2e8f9;
+  --lightest-grayish-blue: #f7f8fd;
+  --white: #ffffff;
+  --black: #000000;
+  --black-semi-transparent: hsla(0, 0%, 0%, 0.749);
+  --black-transparent: hsla(0, 0%, 0%, 0.4);
+
+  /* Info messages */
+  --error-message: #c06464;
+}
