@@ -1,13 +1,13 @@
 import React from 'react';
 
-import './Header.css';
+import styles from './Header.module.css';
 
-const Header = () => {
-  return ( 
-    <header>
-      <h1>Ecommerce Shop Administrator Dashboard</h1>
+export default function Header() {
+  return (
+    <header className={styles[`header`]}>
+      <h1>
+        <span>Ecommerce Shop</span> Administrator Dashboard
+      </h1>
     </header>
   );
 }
- 
-export default Header;
