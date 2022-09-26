@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import { useForm } from 'react-hook-form';
 import {
   storage,
@@ -6,16 +6,23 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from '../firebase';
+
 import ImageGallery from './ImageGallery';
 import { handleUploadFiles } from '../utils';
 
 import styles from './FileUploader.module.css';
 
-export default function FileUploader({ setUrlsObject, popup, isPopup }) {
-  const [imageArray, setImageArray] = useState([]);
-  const { register, handleSubmit } = useForm();
+export default function FileUploader({
+  setUrlsObject,
+  popup,
+  isPopup,
+  imageArray,
+  setImageArray,
+}) {
+  const [progress, setProgress] = useState(null);
+  const { register } = useForm();
 
-  const onSubmit = (data) => {
+  const nextStep = () => {
     imageArray.map((imageBlob) => {
       let imageName = imageBlob.name;
       const imagesRef = ref(storage, `article-images/${imageName}`);
@@ -29,6 +36,8 @@ export default function FileUploader({ setUrlsObject, popup, isPopup }) {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
+          setProgress(() => progress);
+          // progress == 100 && isPopup(() => !popup);
         },
         (error) => {
           switch (error.code) {
@@ -49,20 +58,18 @@ export default function FileUploader({ setUrlsObject, popup, isPopup }) {
         () => {
           // Upload completed successfully, now we can get the download URL
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            console.log('File available at', downloadURL);
             setUrlsObject((prevState) => ({
               ...prevState,
               [imageName]: downloadURL,
             }));
+            console.log('File available at', downloadURL);
           });
         },
       );
     });
   };
 
-  function nextStep() {}
   function cancel() {
-    // console.log(popup);
     isPopup(() => !popup);
   }
 
@@ -75,7 +82,12 @@ export default function FileUploader({ setUrlsObject, popup, isPopup }) {
           &times;
         </span>
         <div className={styles['file-uploader-container']}>
-          <ImageGallery imageArray={imageArray} setImageArray={setImageArray} />
+          <ImageGallery
+            imageArray={imageArray}
+            setImageArray={setImageArray}
+            progress={progress}
+            setProgress={setProgress}
+          />
           <div className={styles['action-container']}>
             <div className={styles[`input-file-wrapper`]}>
               <div>
@@ -96,7 +108,11 @@ export default function FileUploader({ setUrlsObject, popup, isPopup }) {
                       const chosenFiles = Array.prototype.slice.call(
                         event.target.files,
                       );
-                      handleUploadFiles(chosenFiles, [...imageArray], setImageArray);
+                      handleUploadFiles(
+                        chosenFiles,
+                        [...imageArray],
+                        setImageArray,
+                      );
                       event.target.value = '';
                     },
                   })}

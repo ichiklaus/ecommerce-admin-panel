@@ -8,6 +8,7 @@
   grid-row-gap: 0.5rem;
   overflow-y: auto;
   padding: 1.5rem 0.5rem 1.5rem 0;
+  position: relative;
 }
 
 .image-gallery::-webkit-scrollbar {
@@ -59,6 +60,25 @@
   -o-transition: all 200ms ease-in-out;
 }
 
+.image-overlay.progressbar {
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.progressbar-component {
+  width: 72px;
+  height: 72px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
+
 .image-gallery>.image-wrapper:hover .image-overlay {
   opacity: 1;
 }
@@ -68,6 +88,26 @@
   right: 1.5rem;
   top: 1rem;
   cursor: pointer;
+}
+
+#circle-checked {
+  color: #3e98c7;
+  transform: scale(1.6);
+  -webkit-transform: scale(1.6);
+  -moz-transform: scale(1.6);
+  -ms-transform: scale(1.6);
+  -o-transform: scale(1.6);
+}
+
+.progress-icon-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
 }
 
 .image-icon.shake:active>#trash-icon {

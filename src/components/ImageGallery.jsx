@@ -1,11 +1,18 @@
 import React from 'react';
 import { handleUploadFiles } from '../utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './ImageGallery.module.css';
 
-export default function ImageGallery({ imageArray, setImageArray }) {
+export default function ImageGallery({
+  imageArray,
+  setImageArray,
+  progress,
+  setProgress,
+}) {
   // console.log('in gallery', imageArray);
   const removeFileFromArray = (referenceName) => {
     let fileIndex = -1;
@@ -26,6 +33,10 @@ export default function ImageGallery({ imageArray, setImageArray }) {
     handleUploadFiles(slicedArray, [], setImageArray);
   };
 
+  setTimeout(() => {
+    progress === 100 && setProgress(() => null);
+  }, 1000000500);
+
   return (
     <div id="ImageGallery" className={styles[`image-gallery`]}>
       {imageArray &&
@@ -45,6 +56,28 @@ export default function ImageGallery({ imageArray, setImageArray }) {
                 width="100%"
                 height="auto"
               />
+              {progress !== null && (
+                <div
+                  className={`${styles['image-overlay']} ${styles['progressbar']}`}
+                >
+                  {progress <= 100 && (
+                    <CircularProgressbar
+                      value={progress}
+                      // text={progress}
+                      className={styles['progressbar-component']}
+                    />
+                  )}
+                  {progress === 100 && (
+                    <span className={`${styles['progress-icon-wrapper']}`}>
+                      <FontAwesomeIcon
+                        id={`${styles['circle-checked']}`}
+                        icon={faCircleCheck}
+                        // color="#ff7d1a"
+                      />
+                    </span>
+                  )}
+                </div>
+              )}
               <div className={styles['image-overlay']}>
                 <span
                   // key={previewImage && previewImage.name}
@@ -55,7 +88,11 @@ export default function ImageGallery({ imageArray, setImageArray }) {
                     }, 100);
                   }}
                 >
-                  <FontAwesomeIcon id={styles['trash-icon']} icon={faTrash} color="white" />
+                  <FontAwesomeIcon
+                    id={styles['trash-icon']}
+                    icon={faTrash}
+                    color="white"
+                  />
                 </span>
               </div>
             </div>
