@@ -8,7 +8,7 @@ import { useState } from 'react';
 
 const API_URL = `http://127.0.0.1:5000/api/ecommerce-articles/`;
 
-export default function Form({ urlsObject, setUrlsObject }) {
+export default function Form() {
   const {
     register,
     handleSubmit,
@@ -17,15 +17,16 @@ export default function Form({ urlsObject, setUrlsObject }) {
     formState: { errors },
   } = useForm();
 
+  const [imageArray, setImageArray] = useState([]);
+  const [urlsObject, setUrlsObject] = useState({});
+
   const onSubmit = async (data) => {
+    data['article-images-path'] = urlsObject;
     if (data['article-discount'] === '') data['article-discount'] = '0';
     if (data['article-size'] === '') data['article-size'] = 'Not specified.';
-    // Adds the absolute path of the images uploaded to the body of JSON
-    data['article-images-path'] = urlsObject;
     console.log(urlsObject);
     console.log(JSON.stringify(data));
-
-    // TODO: Image upload code
+    // ********************************************************************************************
     try {
       const response = await axios({
         method: 'POST',
@@ -40,6 +41,9 @@ export default function Form({ urlsObject, setUrlsObject }) {
       console.log(response.data);
       if (response.ok) {
         setUrlsObject(() => ({}));
+        setImageArray(() => []);
+        console.log('after submit: ', urlsObject);
+        console.log('after submit: ', imageArray);
         data = {};
       }
     } catch (error) {
@@ -48,8 +52,11 @@ export default function Form({ urlsObject, setUrlsObject }) {
     }
   };
 
+  // **************************************************************
   useEffect(() => {
     if (formState.isSubmitSuccessful) {
+      setUrlsObject(() => ({}));
+      setImageArray(() => []);
       reset();
     }
   }, [formState, reset]);
@@ -247,7 +254,13 @@ export default function Form({ urlsObject, setUrlsObject }) {
           </div>
         </div>
 
-        <FileUploader popup={popup} isPopup={isPopup} />
+        <FileUploader
+          popup={popup}
+          isPopup={isPopup}
+          imageArray={imageArray}
+          setImageArray={setImageArray}
+          setUrlsObject={setUrlsObject}
+        />
         <div
           id="upload-popup-button"
           className={styles['upload-popup-button-wrapper']}
