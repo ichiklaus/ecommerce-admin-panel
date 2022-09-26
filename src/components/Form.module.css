@@ -114,9 +114,10 @@
 }
 
 .upload-popup-button-wrapper>i {
-  display: block;
+  display: grid;
+  place-content: center;
   width: 100%;
-  height: auto;
+  height: 100%;
 }
 
 .register-button-wrapper,
