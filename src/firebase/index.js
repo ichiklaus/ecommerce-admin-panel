@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { getStorage, connectStorageEmulator, ref, uploadBytesResumable, getDownloadURL, getMetadata } from 'firebase/storage';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -22,8 +22,14 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+const env = process.env.NODE_ENV
 
 // Get Storage
 const storage = getStorage(app);
+// if (env == "development") {
+//   console.log("env")
+  connectStorageEmulator(storage, "localhost", 9199);
+// }
+// do something
 
-export { storage, ref, uploadBytesResumable, getDownloadURL };
+export { storage, ref, uploadBytesResumable, getDownloadURL, getMetadata };
