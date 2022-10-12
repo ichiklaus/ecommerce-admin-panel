@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import FileUploader from './FileUploader';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+
 import styles from './Form.module.css';
-import { useState } from 'react';
 
 const API_URL = `http://127.0.0.1:5000/api/ecommerce-articles/`;
 
@@ -18,14 +20,17 @@ export default function Form() {
   } = useForm();
 
   const [imageArray, setImageArray] = useState([]);
+  const [popup, isPopup] = useState(false);
   const [urlsObject, setUrlsObject] = useState({});
+  const [isVisible, setIsVisible] = useState(false);
+  const [isUploaded, setIsUploaded] = useState(false);
 
   const onSubmit = async (data) => {
     data['article-images-path'] = urlsObject;
     if (data['article-discount'] === '') data['article-discount'] = '0';
     if (data['article-size'] === '') data['article-size'] = 'Not specified.';
-    console.log(urlsObject);
-    console.log(JSON.stringify(data));
+    // console.log(urlsObject);
+    // console.log(JSON.stringify(data));
     // ********************************************************************************************
     try {
       const response = await axios({
@@ -38,13 +43,16 @@ export default function Form() {
         },
         data: JSON.stringify(data),
       });
-      console.log(response.data);
-      if (response.ok) {
+      console.log('Status Message: ', response.data);
+      if (response.statusText === 'OK') {
         setUrlsObject(() => ({}));
         setImageArray(() => []);
-        console.log('after submit: ', urlsObject);
-        console.log('after submit: ', imageArray);
         data = {};
+        setIsUploaded(() => true);
+        setIsVisible(() => true);
+        setTimeout(() => {
+          setIsVisible(() => false);
+        }, 1000);
       }
     } catch (error) {
       console.log(error.response);
@@ -89,8 +97,6 @@ export default function Form() {
       },
     },
   };
-
-  const [popup, isPopup] = useState(false);
 
   function openPopup() {
     console.log(popup);
@@ -257,6 +263,7 @@ export default function Form() {
         <FileUploader
           popup={popup}
           isPopup={isPopup}
+          // setIsUploaded={setIsUploaded}
           imageArray={imageArray}
           setImageArray={setImageArray}
           setUrlsObject={setUrlsObject}
@@ -275,6 +282,20 @@ export default function Form() {
           </button>
         </div>
       </form>
+
+      <div
+        className={`${styles['successful-wrapper']} ${
+          !isUploaded || !isVisible
+            ? `${styles['successful-wrapper--invisible']}`
+            : styles['successful-wrapper--visible']
+        } `}
+      >
+        <FontAwesomeIcon
+          className={styles[`successful`]}
+          icon={faCircleCheck}
+          color="green"
+        />
+      </div>
     </div>
   );
 }
