@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
 import {
   storage,
@@ -16,27 +16,37 @@ export default function FileUploader({
   setUrlsObject,
   popup,
   isPopup,
+  setIsUploaded,
   imageArray,
   setImageArray,
 }) {
-  const [progress, setProgress] = useState(null);
   const { register } = useForm();
 
   const nextStep = () => {
     imageArray.map((imageBlob) => {
       let imageName = imageBlob.name;
       const imagesRef = ref(storage, `article-images/${imageName}`);
+      let progressArr = [];
+      let sumProgress = 0;
+
       // Upload Task
       const uploadTask = uploadBytesResumable(imagesRef, imageBlob);
-
-      return uploadTask.on(
+      uploadTask.on(
         'state_changed',
         (snapshot) => {
           // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
           console.log('Upload is ' + progress + '% done');
-          setProgress(() => progress);
+          if (progress === 100) progressArr.push(progress);
+
+          sumProgress = progressArr.reduce((prev, curr) => prev + curr, 0);
+          sumProgress = sumProgress / progressArr.length;
+          if (sumProgress === 100) {
+            alert('File has been uploaded successfully.');
+            isPopup(() => !popup);
+            // setIsUploaded(() => true);
+          } else console.log('An error ocurred while uploading.');
           // progress == 100 && isPopup(() => !popup);
         },
         (error) => {
@@ -82,12 +92,7 @@ export default function FileUploader({
           &times;
         </span>
         <div className={styles['file-uploader-container']}>
-          <ImageGallery
-            imageArray={imageArray}
-            setImageArray={setImageArray}
-            progress={progress}
-            setProgress={setProgress}
-          />
+          <ImageGallery imageArray={imageArray} setImageArray={setImageArray} />
           <div className={styles['action-container']}>
             <div className={styles[`input-file-wrapper`]}>
               <div>
