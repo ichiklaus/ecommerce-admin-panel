@@ -7,20 +7,13 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import styles from './ImageGallery.module.css';
 
-export default function ImageGallery({
-  imageArray,
-  setImageArray,
-  progress,
-  setProgress,
-}) {
+export default function ImageGallery({ imageArray, setImageArray }) {
   // console.log('in gallery', imageArray);
   const removeFileFromArray = (referenceName) => {
     let fileIndex = -1;
     if (referenceName !== '') {
       // If referenceName is not empty then get the index of that reference in the array
       fileIndex = imageArray.findIndex((file) => file.name === referenceName);
-      // console.log('index of referenced image', fileIndex);
-      // console.log('reference', referenceName);
     }
 
     // Copy the new array after slicing the original array
@@ -33,9 +26,9 @@ export default function ImageGallery({
     handleUploadFiles(slicedArray, [], setImageArray);
   };
 
-  setTimeout(() => {
-    progress === 100 && setProgress(() => null);
-  }, 1000000500);
+  // setTimeout(() => {
+  //   fileRefProgress === 100 && setFileRefProgress(() => []);
+  // }, 1000);
 
   return (
     <div id="ImageGallery" className={styles[`image-gallery`]}>
@@ -56,28 +49,7 @@ export default function ImageGallery({
                 width="100%"
                 height="auto"
               />
-              {progress !== null && (
-                <div
-                  className={`${styles['image-overlay']} ${styles['progressbar']}`}
-                >
-                  {progress <= 100 && (
-                    <CircularProgressbar
-                      value={progress}
-                      // text={progress}
-                      className={styles['progressbar-component']}
-                    />
-                  )}
-                  {progress === 100 && (
-                    <span className={`${styles['progress-icon-wrapper']}`}>
-                      <FontAwesomeIcon
-                        id={`${styles['circle-checked']}`}
-                        icon={faCircleCheck}
-                        // color="#ff7d1a"
-                      />
-                    </span>
-                  )}
-                </div>
-              )}
+
               <div className={styles['image-overlay']}>
                 <span
                   // key={previewImage && previewImage.name}
