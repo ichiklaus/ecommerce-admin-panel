@@ -8,6 +8,7 @@
 
 .header>h1 {
   text-align: center;
+  color: var(--midnight-blue);
 }
 
 .header>h1>span {
