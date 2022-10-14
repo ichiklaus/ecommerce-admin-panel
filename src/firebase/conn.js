@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getStorage, connectStorageEmulator, ref, uploadBytesResumable, getDownloadURL, getMetadata } from 'firebase/storage';
+import { getAuth, connectAuthEmulator, signInWithEmailAndPassword, signOut, onAuthStateChanged  } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -28,8 +29,11 @@ const env = process.env.NODE_ENV
 const storage = getStorage(app);
 // if (env == "development") {
 //   console.log("env")
-  connectStorageEmulator(storage, "localhost", 9199);
+connectStorageEmulator(storage, "localhost", 9199);
 // }
 // do something
 
-export { storage, ref, uploadBytesResumable, getDownloadURL, getMetadata };
+const auth = getAuth();
+connectAuthEmulator(auth, "http://localhost:9099");
+
+export { auth, signInWithEmailAndPassword, signOut, storage, ref, uploadBytesResumable, getDownloadURL, getMetadata };
