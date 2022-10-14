@@ -3,6 +3,7 @@
   --pale-orange: #ffede0;
   --orange-semi-transparent: #ff7d1acc;
   --orange-transparent: #ff7d1a33;
+  --midnight-blue: #032E66;
 
   /* ### Neutral */
   --very-vark-blue: #1d2025;
@@ -13,8 +14,12 @@
   --white: #ffffff;
   --black: #000000;
   --black-semi-transparent: hsla(0, 0%, 0%, 0.749);
-  --black-transparent: hsla(0, 0%, 0%, 0.4);
+  --black-transparent: rgba(0, 0, 0, 0.4);
+  --gray-transparent: rgba(25, 25, 25, 0.2);
 
   /* Info messages */
   --error-message: #c06464;
+
+  --transition-200: all 200ms ease-in-out;
+  --transition-opacity-1000: all 200ms ease-in-out;
 }
