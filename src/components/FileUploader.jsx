@@ -5,7 +5,7 @@ import {
   ref,
   uploadBytesResumable,
   getDownloadURL,
-} from '../firebase';
+} from '../firebase/conn';
 
 import ImageGallery from './ImageGallery';
 import { handleUploadFiles } from '../utils';
